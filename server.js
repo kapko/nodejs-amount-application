@@ -15,10 +15,6 @@ db.once('open', () => {
     console.log('Connected');
 });
 
-db.on('error', err => {
-    console.log('DB Error', err);
-});
-
 app.get('/users', (req, res) => {
 
     Users.find({}, (err, users) => {
