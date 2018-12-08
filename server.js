@@ -16,6 +16,7 @@ db.once('open', () => {
 });
 
 app.use('/api', require('./auth/authorization.router'));
+app.use('/api/posts', require('./routers/post.router'));
 
 // app.get('/api/posts', auth.verifyToken, (req, res) => {
 //     auth.verify(req.token)
