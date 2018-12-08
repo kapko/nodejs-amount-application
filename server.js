@@ -2,12 +2,12 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+
+// user
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 
-// models
-const Users = require('./models/users');
-
+// connection
 mongoose.connect('mongodb://localhost:27017/amount');
 const db = mongoose.connection;
 
@@ -15,55 +15,30 @@ db.once('open', () => {
     console.log('Connected');
 });
 
-app.get('/users', (req, res) => {
+app.use('/api', require('./auth/authorization.router'));
 
-    Users.find({}, (err, users) => {
-        if (err) {
-            res.send(err);
-        } else {
-            res.send(users);
-        }
-    });
+// app.get('/api/posts', auth.verifyToken, (req, res) => {
+//     auth.verify(req.token)
+//         .then(token => {
+//             res.send('ok');
+//         })
+//         .catch(err => res.sendStatus(err));
+// });
 
-});
+// app.post('/api/login', (req, res) => {
+//     const name = req.body.name;
+//     const password = req.body.password;
 
-app.post('/users/add', (req, res) => {
-    const newUser = new Users(req.body);
+//     .findOne({name, password}, (err , user) => {
+//         if (!user) return res.sendStatus(401);
 
-    newUser.save((err, user) => {
-        if (err) {
-            console.log(err);
-        } else {
-            res.send(user._id);
-        }
-    });
+//         auth.getToken(user)
+//             .then(token => res.send(token))
+//             .catch(err => res.send(err));
 
-});
-
-app.delete('/users/delete/:id', (req, res) => {
-    Users.findOneAndRemove({_id: req.params.id}, (err, user) => {
-        if (err) {
-            res.send(err);
-        } else {
-            res.send(user)
-        }
-    });
-});
-
-app.patch('/users/update/:id', (req, res) => {
-    Users.updateOne({_id: req.params.id}, req.body, (err, user) => {
-        if (err) {
-            res.send(err);
-        } else {
-            res.send(user);
-        }
-    });
-});
-
-app.get('/list', (req, res) => {
-   res.send('this is list');
-});
+//     });
+// });
 
 app.listen(4000, function () {
-  console.log('Example app listening on port 3000!');
+    console.log('Example app listening on port 3000!');
 });
