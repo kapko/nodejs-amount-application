@@ -21,6 +21,6 @@ db.once('open', () => {
 app.use('/api', require('./auth/authorization.router'));
 app.use('/api/posts', require('./routers/post.router'));
 
-app.listen(4000, function () {
-    console.log('Example app listening on port 3000!');
+app.listen(process.env.PORT || 4000, function(){
+    console.log('PORT  4000');
 });
