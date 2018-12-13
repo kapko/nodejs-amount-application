@@ -27,7 +27,7 @@ router.post('/add', verifyToken, async(req, res) => {
 
         createNewPost(req.body)
             .then(post => {
-                res.send(post);
+                res.json(post);
             })
             .catch(postErr => res.send(postErr));
 
@@ -45,7 +45,7 @@ router.delete('/delete', verifyToken, async(req, res) => {
 
         removeById(req.body.id)
             .then(post => {
-                res.send(post);
+                res.json(post);
             })
             .catch(postErr => res.send(postErr));
 
@@ -61,7 +61,7 @@ router.patch('/update/:id', verifyToken, async(req, res) => {
 
         updateById(req.params.id, req.body)
             .then(post => {
-                res.send(post);
+                res.json(post);
             })
             .catch(postErr => res.send(postErr));
 
