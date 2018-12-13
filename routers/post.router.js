@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { verifification, verifyToken } = require('../auth/token');
-const {createNewPost, findAll, removeById, updateById} = require('../models/post/post.model');
+const {createNewPost, findAll, findByField, removeById, updateById} = require('../models/post/post.model');
 
 router.get('/', verifyToken, async(req, res) => {
 
@@ -11,6 +11,23 @@ router.get('/', verifyToken, async(req, res) => {
         findAll()
             .then(posts => {
                 res.json(posts);
+            })
+            .catch(err => res.sendStatus(500));
+
+    } catch(e) {
+        res.sendStatus(401);
+    }
+
+});
+
+router.get('/post/:id', verifyToken, async(req, res) => {
+
+    try {
+        await verifification(req.token);
+
+        findByField({_id: req.params.id})
+            .then(post => {
+                res.json(post);
             })
             .catch(err => res.sendStatus(500));
 
@@ -38,12 +55,12 @@ router.post('/add', verifyToken, async(req, res) => {
     
 });
 
-router.delete('/delete', verifyToken, async(req, res) => {
+router.delete('/delete/:id', verifyToken, async(req, res) => {
 
     try {
         await verifification(req.token);
 
-        removeById(req.body.id)
+        removeById(req.params.id)
             .then(post => {
                 res.json(post);
             })

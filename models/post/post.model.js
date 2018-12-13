@@ -61,9 +61,28 @@ function updateById(id, data) {
     return promise;
 }
 
+function findByField(field) {
+
+    const promise = new Promise((res, rej) => {
+        postModel.findOne(field, (err, user) => {
+            if (err) return rej(err);
+    
+            // if not found send 404
+            if (!user) {
+                rej(404);
+            } else {
+                res(user);
+            }
+        });
+    });
+
+    return promise;
+}
+
 module.exports = {
     createNewPost,
     findAll,
     removeById,
     updateById,
+    findByField
 };
