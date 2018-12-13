@@ -20,6 +20,10 @@ db.once('open', () => {
     console.log('Connected');
 });
 
+app.get('/', (req, res) => {
+    res.send(' 🚶');
+});
+
 app.use('/api', require('./auth/authorization.router'));
 app.use('/api/posts', require('./routers/post.router'));
 
