@@ -10,6 +10,8 @@ const postModelFields = {
     soldAmount: Number,
     balanceAmount: Number,
     balancePrice: Number,
+    created: Date,
+    updated: Date
 }
 
 module.exports = { postModelFields };
