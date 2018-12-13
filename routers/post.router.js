@@ -17,7 +17,7 @@ router.get('/', verifyToken, async(req, res) => {
     } catch(e) {
         res.sendStatus(401);
     }
-    
+
 });
 
 router.post('/add', verifyToken, async(req, res) => {
