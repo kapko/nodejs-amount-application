@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const { check, validationResult } = require('express-validator/check');
-const {findByField, createNewUser} = require('../models/users/users.model');
-const { getToken } = require('./token');
+const {findByField, createNewUser, findAllUsers } = require('../models/users/users.model');
+const { getToken, verifification, verifyToken } = require('./token');
 
 // validation
 const fields = ['name', 'role', 'phone'];
@@ -63,6 +63,22 @@ router.post('/login', async(req, res) => {
         .catch(err => {
             res.sendStatus(401);
         });
+});
+
+router.get('/users', verifyToken, async(req, res) => {
+    try {
+        await verifification(req.token);
+
+        findAllUsers()
+            .then(users => {
+                res.json(users);
+            })
+            .catch(err => res.sendStatus(500));
+
+    } catch(e) {
+        res.sendStatus(401);
+    }
+
 });
 
 module.exports = router;

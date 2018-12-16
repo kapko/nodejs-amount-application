@@ -20,6 +20,22 @@ function findByField(field) {
 
 }
 
+function findAllUsers() {
+    return new Promise((res, rej) => {
+        userModel.find({}, (err, user) => {
+            if (err) return rej(err);
+
+            // if not found send 404
+            if (!user) {
+                rej(404);
+            } else {
+                res(user);
+            }
+        });
+    });
+
+}
+
 // data = userSchema
 function createNewUser(data) {
     const newUser = new userModel(data);
@@ -39,5 +55,6 @@ function createNewUser(data) {
 
 module.exports = {
     findByField,
+    findAllUsers,
     createNewUser
 };
