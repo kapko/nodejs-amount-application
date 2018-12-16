@@ -2,9 +2,10 @@ const express = require('express');
 const router = express.Router();
 const { verifification, verifyToken } = require('../auth/token');
 const {createNewPost, findAll, findByField, removeById, updateById} = require('../models/post/post.model');
+const url = require('url');
 
 router.get('/', verifyToken, async(req, res) => {
-    const {title, sellerId, page} = req.query;
+    const {title, sellerId, page} = url.parse(req.url, true).query;
     const pagination = { skip: page * 20 | 0, limit: 20}
     const query = {
         title: new RegExp(title, 'ig'),
