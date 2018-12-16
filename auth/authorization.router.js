@@ -54,7 +54,8 @@ router.post('/login', async(req, res) => {
             // SEND TOKEN
             try {
                 const token = await getToken(user);
-                res.json(token);
+                res.json({token, user});
+
             } catch(e) {
                 res.send(500);
             }
