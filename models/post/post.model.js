@@ -19,9 +19,9 @@ function createNewPost(data) {
     return promise;
 }
 
-function findAll() {
+function findAll(fields, pagination) {
     const posts = new Promise((res, rej) => {
-        postModel.find({}, (err, posts) => {
+        postModel.find(fields, null, pagination, (err, posts) => {
             if (err) {
                 rej(err)
             } else {

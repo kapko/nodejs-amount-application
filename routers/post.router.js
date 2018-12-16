@@ -4,11 +4,20 @@ const { verifification, verifyToken } = require('../auth/token');
 const {createNewPost, findAll, findByField, removeById, updateById} = require('../models/post/post.model');
 
 router.get('/', verifyToken, async(req, res) => {
+    const {title, sellerId, page} = req.query;
+    const pagination = { skip: page * 20 | 0, limit: 20}
+    const query = {
+        title: new RegExp(title, 'ig'),
+    };
+
+    if (sellerId) {
+        query.sellerId = new RegExp(sellerId, 'ig');
+    }
 
     try {
         await verifification(req.token);
 
-        findAll()
+        findAll(query, pagination)
             .then(posts => {
                 res.json(posts);
             })
