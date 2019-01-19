@@ -53,8 +53,39 @@ function createNewUser(data) {
     return promise;
 }
 
+function removeById(id) {
+    const promise = new Promise((res, rej) => {
+        userModel.findOneAndRemove({_id: id}, (err, post) => {
+            if (err) {
+                rej(err);
+            } else {
+                res(post)
+            }
+        });
+    });
+
+    return promise;
+}
+
+function updateById(id, data) {
+    const promise = new Promise((res, rej) => {
+        userModel.updateOne({_id: id}, data, (err, post) => {
+            if (err) {
+                rej(err);
+            } else {
+                res(post);
+            }
+        });
+    });
+
+    return promise;
+}
+
+
 module.exports = {
     findByField,
     findAllUsers,
-    createNewUser
+    createNewUser,
+    removeById,
+    updateById
 };

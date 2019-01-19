@@ -65,20 +65,4 @@ router.post('/login', async(req, res) => {
         });
 });
 
-router.get('/users', verifyToken, async(req, res) => {
-    try {
-        await verifification(req.token);
-
-        findAllUsers()
-            .then(users => {
-                res.json(users);
-            })
-            .catch(err => res.sendStatus(500));
-
-    } catch(e) {
-        res.sendStatus(401);
-    }
-
-});
-
 module.exports = router;

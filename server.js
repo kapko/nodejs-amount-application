@@ -27,6 +27,8 @@ app.get('/', (req, res) => {
 
 app.use('/api', require('./auth/authorization.router'));
 app.use('/api/posts', require('./routers/post.router'));
+app.use('/api/users', require('./routers/users.router'));
+app.use('/api/sold', require('./routers/sold.router'));
 
 app.listen(process.env.PORT || 4000, function(){
     console.log('PORT  4000');
