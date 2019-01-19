@@ -7,6 +7,7 @@ const postModelFields = {
     totalPrice: Number,
     sold: Number,
     soldPrice: Number,
+    customer: String,
     soldAmount: Number,
     balanceAmount: Number,
     balancePrice: Number,
