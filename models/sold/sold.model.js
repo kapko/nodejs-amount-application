@@ -21,13 +21,16 @@ function createNewPost(data) {
 
 function findAll(fields, pagination) {
     const posts = new Promise((res, rej) => {
-        soldModel.find(fields, null, pagination, (err, posts) => {
-            if (err) {
-                rej(err)
-            } else {
-                res(posts)
-            }
-        });
+        soldModel
+            .find(fields, null, pagination)
+            .sort({created: -1})
+            .exec((err, posts) => {
+                if (err) {
+                    rej(err)
+                } else {
+                    res(posts)
+                }
+            });
     });
 
     return posts;
