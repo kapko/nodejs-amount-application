@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { verifification, verifyToken } = require('../auth/token');
-const {findAllUsers, createNewUser, removeById, updateById} = require('../models/users/users.model');
+const {findAllUsers, createNewUser, findByField, removeById, updateById} = require('../models/users/users.model');
 
 router.get('/', verifyToken, async(req, res) => {
     try {
@@ -18,6 +18,24 @@ router.get('/', verifyToken, async(req, res) => {
     }
 
 });
+
+
+router.get('/:userId', verifyToken, async(req, res) => {
+    try {
+        await verifification(req.token);
+
+        findByField({_id: req.params.userId})
+            .then(users => {
+                res.json(users);
+            })
+            .catch(err => res.send(err));
+
+    } catch(e) {
+        res.sendStatus(401);
+    }
+
+});
+
 
 router.post('/add', verifyToken, async(req, res) => {
 
